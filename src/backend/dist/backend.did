@@ -1,0 +1,119 @@
+type UserStats = 
+ record {
+   accuracyRate: float64;
+   losses: nat;
+   totalPredictions: nat;
+   wins: nat;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type TrendDirection = 
+ variant {
+   bearish;
+   bullish;
+   neutral;
+ };
+type TradingSignal = 
+ record {
+   direction: SignalDirection;
+   strength: float64;
+   ticker: Ticker;
+   timestamp: Timestamp;
+ };
+type TopMover = 
+ record {
+   changePercent: float64;
+   price: float64;
+   ticker: text;
+   volume: nat;
+ };
+type Timestamp = int;
+type Ticker = text;
+type SignalDirection = 
+ variant {
+   buy;
+   hold;
+   sell;
+ };
+type PredictionEntry = 
+ record {
+   confidence: nat;
+   projection: vec float64;
+   resistanceLevel: float64;
+   signalStrength: nat;
+   supportLevel: float64;
+   ticker: Ticker;
+   timestamp: Timestamp;
+   trend: TrendDirection;
+   volatility: float64;
+ };
+type Prediction = 
+ record {
+   confidence: nat;
+   projection: vec float64;
+   resistanceLevel: float64;
+   signalStrength: nat;
+   supportLevel: float64;
+   ticker: Ticker;
+   timestamp: Timestamp;
+   trend: TrendDirection;
+   volatility: float64;
+ };
+type OHLC = 
+ record {
+   close: float64;
+   high: float64;
+   low: float64;
+   open: float64;
+   ticker: Ticker;
+   timestamp: Timestamp;
+   volume: nat;
+ };
+type MarketSummary = 
+ record {
+   lastUpdated: int;
+   marketBreadth: float64;
+   sentimentScore: nat;
+   topMovers: vec TopMover;
+ };
+type MarketAlert = 
+ record {
+   message: text;
+   severity: AlertSeverity;
+   ticker: Ticker;
+   timestamp: Timestamp;
+ };
+type AlertSeverity = 
+ variant {
+   critical;
+   info;
+   warning;
+ };
+service : {
+  _initializeAccessControl: () -> ();
+  addToWatchlist: (ticker: text) -> ();
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  getCallerUserRole: () -> (UserRole) query;
+  getCandlestickHistory: (ticker: text) -> (vec OHLC) query;
+  getCurrentPrice: (ticker: text) -> (OHLC) query;
+  getLastFetchTime: () -> (opt int) query;
+  getMarketSummary: (tickers: vec text) -> (MarketSummary) query;
+  getMultiplePrices: (tickers: vec text) ->
+   (vec record {
+          text;
+          float64;
+        }) query;
+  getPredictionHistory: () -> (vec PredictionEntry) query;
+  getRecentAlerts: () -> (vec MarketAlert) query;
+  getTradingSignal: (ticker: text) -> (TradingSignal) query;
+  getUserStats: () -> (UserStats) query;
+  getWatchlist: () -> (vec text) query;
+  isCallerAdmin: () -> (bool) query;
+  predict: (ticker: text) -> (Prediction);
+  refreshMarketData: () -> ();
+  removeFromWatchlist: (ticker: text) -> ();
+}

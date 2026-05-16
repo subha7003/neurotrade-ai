@@ -1,0 +1,76 @@
+// Version: 3.0.0
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type List__415060402<T> = List__790383201<T>;
+type List__790383201<T> =
+  {
+    var blockIndex : Nat__490723111;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__490723111
+  };
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type OldPredictionEntry__881918431 =
+  {
+    confidence : Nat;
+    projection : [Float];
+    ticker : Text;
+    timestamp : Int;
+    trend : OldTrendDirection__1016816177;
+    volatility : Float
+  };
+type OldTrendDirection__1016816177 = {#bearish; #bullish; #neutral};
+type PredictionEntry__218422996 =
+  {
+    confidence : Nat;
+    projection : [Float];
+    resistanceLevel : Float;
+    signalStrength : Nat;
+    supportLevel : Float;
+    ticker : Ticker__140866600;
+    timestamp : Timestamp__301639476;
+    trend : TrendDirection__61853137;
+    volatility : Float
+  };
+type Ticker__140866600 = Text;
+type Timestamp__301639476 = Int;
+type TrendDirection__61853137 = {#bearish; #bullish; #neutral};
+type UserRole__1073662873 = {#admin; #guest; #user};
+actor ({
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1073662873>
+    };
+  in history :
+    Map__605269027<Principal, List__415060402<OldPredictionEntry__881918431>>;
+  stable marketState : {var lastFetchTime : ?Int};
+  in watchlists : Map__605269027<Principal, List__415060402<Text>>
+}, {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1073662873>
+    };
+  stable history :
+    {
+      var root :
+        Node__46230540<Principal, List__415060402<PredictionEntry__218422996>>;
+      var size : Nat__490723111
+    };
+  stable marketState : {var lastFetchTime : ?Int};
+  stable watchlists :
+    {
+      var root : Node__46230540<Principal, List__415060402<Text>>;
+      var size : Nat__490723111
+    }
+});

@@ -1,0 +1,22 @@
+{
+  "overview": "A full-stack AI-powered FinTech platform with real-time mock market data simulation, an interactive stock prediction engine, Internet Identity authentication, and persistent prediction history — all wrapped in a premium dark-mode dashboard with neon gradients and glassmorphism design.",
+  "features": [
+    "Real-time simulated stock price feeds with candlestick charts",
+    "AI prediction engine with confidence scores, trend direction, and volatility estimates",
+    "Explainable AI panel with feature importance bars and attention heatmap",
+    "Internet Identity login with persistent prediction history and watchlist",
+    "Full dashboard with trading signals, market alerts, and user stats",
+    "Polling-based live data refresh every 3-5 seconds with smooth animations"
+  ],
+  "category": "fintech",
+  "tags": [
+    "fintech",
+    "ai",
+    "stock-prediction",
+    "dashboard",
+    "dark-mode",
+    "real-time",
+    "glassmorphism"
+  ],
+  "last_updated": "2026-05-13T11:01:39.236Z"
+}
